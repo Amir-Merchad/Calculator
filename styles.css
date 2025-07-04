@@ -275,7 +275,7 @@ html, body{
         border-radius: 15px;
     }
 
-    .header, .footer {
+    .header{
         height: 40px;
         font-size: 14px;
     }
