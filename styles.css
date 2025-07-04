@@ -18,7 +18,7 @@ html, body{
 
 .body{
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     flex-direction: column;
     justify-content: flex-start;
@@ -263,6 +263,9 @@ html, body{
     height: 50px;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
 }
 
 @media (max-width: 600px) {

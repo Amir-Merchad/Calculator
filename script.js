@@ -34,17 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.onload = () => {
-    const lightBtn = document.getElementById('lightMode');
-    const darkBtn = document.getElementById('darkMode');
     const body = document.body;
-
-    // Default to light mode
     body.classList.add('body-light');
     document.querySelector('.header').classList.add('header-light');
     document.querySelector('.footer').classList.add('footer-light');
     document.querySelector('.box').classList.add('box-light');
     document.querySelector('.screen').classList.add('screen-light');
-
-    lightBtn.style.display = 'none';
-    darkBtn.style.display = 'inline-block';
 };
