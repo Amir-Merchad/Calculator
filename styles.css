@@ -18,10 +18,8 @@ html, body{
 
 .body{
     display: flex;
-    min-height: 100vh;
-    width: 100%;
     flex-direction: column;
-    justify-content: flex-start;
+    min-height: 100vh;
     align-items: center;
 }
 
@@ -92,12 +90,11 @@ html, body{
 }
 
 .boxContainer{
-    flex: 1 0 auto;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-
 }
 
 .box{
@@ -263,8 +260,6 @@ html, body{
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    position: sticky;
-    bottom: 0;
 }
 
 @media (max-width: 600px) {
