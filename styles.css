@@ -11,6 +11,7 @@ html, body{
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
 }
 
 .body-light{
@@ -24,10 +25,11 @@ html, body{
 }
 
 .body{
-    flex: 1;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 60px;
 }
 
 .header-light{
@@ -98,11 +100,15 @@ html, body{
 
 .boxContainer{
     align-items: center;
-    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
+
+    padding: 20px 0; /* Added vertical padding */
+    width: 100%;
+    flex: 1;
+    overflow: auto;
 }
 
 .box{
@@ -268,9 +274,23 @@ html, body{
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
+
+    position: absolute; /* Changed from static */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
 }
 
 @media (max-width: 600px) {
+    .body{
+        padding-bottom: 40px;
+    }
+
+    .footer{
+        height: 40px;
+    }
+
     .box {
         margin: 10px;
         height: auto;
