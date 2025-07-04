@@ -2,6 +2,7 @@ html, body{
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    font-family: 'Roboto', sans-serif;
 }
 
 .body-light{
@@ -21,7 +22,6 @@ html, body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    flex: 1;
 }
 
 .header-light{
@@ -30,6 +30,7 @@ html, body{
     -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    color: rgba(66,66,66,100);
 }
 
 .header-dark{
@@ -38,9 +39,12 @@ html, body{
     -webkit-backdrop-filter: blur(15px);
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    color: rgba(255,255,255,100);
 }
 
 .header{
+    font-weight: bold;
+    font-size: 36px;
     display: flex;
     width: 100%;
     height: 50px;
@@ -54,7 +58,7 @@ html, body{
     right: 4px;
     display: flex;
     z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.1); /* or glassy bg */
+    background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 6px;
@@ -111,20 +115,26 @@ html, body{
 }
 
 .screen-light{
-    background-color: #222831;
+    background: rgba(255,255,255,0);
+    color: rgba(66,66,66,100);
 }
 
 .screen-dark{
-    background-color: #51586a;
+    background: rgba(255,255,255,0);
+    color: rgba(255,255,255,100);
 }
 
 .screen{
     display: flex;
     max-width: 500px;
-    height: 130px;
+    /height: 130px;
     border-radius: 12px;
-    border: 1px solid #222831;
     margin-bottom: 10px;
+    justify-content: flex-end;
+    align-content: flex-end;
+    font-size: 36px;
+    padding-top: 90px;
+    padding-bottom: 20px;
 }
 
 .buttons{
@@ -134,8 +144,8 @@ html, body{
     align-content: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    max-width: 500px;
     gap: 10px;
+    max-width: 500px;
 }
 
 .left-buttons {
@@ -143,10 +153,12 @@ html, body{
     flex-direction: column;
     gap: 10px;
     flex: 3;
+    width: 100%;
 }
 
 .right-buttons {
-    max-width: 70px;
+    color : rgba(92,166,227,0);
+    max-width: 100px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -156,25 +168,55 @@ html, body{
 .row {
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    width: 100%;
 }
 
 .calc-button{
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     flex: 1;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
     min-width: 0;
     height: 80px;
-    color: white;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.calc-button.equal,.calc-button.add,.calc-button.subs,.calc-button.mult,.calc-button.div{
+    color: #5CA6E3;
+}
+
+.calc-button:hover{
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.zero{
+    flex: 2;
+}
+.equal{
+    flex: 3;
+}
+
+@keyframes bubble-pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
 .calc-button:hover {
     background-color: rgba(255, 255, 255, 0.3);
+}
+
+.calc-button:active {
+    animation: bubble-pop 0.3s ease;
 }
 
 .box-light{
@@ -199,6 +241,7 @@ html, body{
     -webkit-backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    color: rgba(255,255,255,100);
 }
 
 .footer-light{
@@ -207,9 +250,12 @@ html, body{
     -webkit-backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    color: rgba(66,66,66,100);
 }
 
 .footer{
+    font-weight: bold;
+    font-size: 18px;
     margin-top: auto;
     display: flex;
     width: 100%;
@@ -245,8 +291,22 @@ html, body{
         padding: 4px 8px;
         font-size: 14px;
     }
+
     .calc-button{
         font-size: 24px;
         height: 50px;
+    }
+    .calc-button {
+        height: 50px;
+        font-size: 1rem;
+    }
+
+    .buttons {
+        padding: 5px;
+        gap: 5px;
+    }
+
+    .row {
+        gap: 5px;
     }
 }

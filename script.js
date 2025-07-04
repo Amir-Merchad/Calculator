@@ -30,12 +30,12 @@ function setTheme(mode) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    setTheme('light'); // or 'dark'
+    setTheme('light');
 });
 
 window.onload = () => {
-    const lightBtn = document.getElementById('lightBtn');
-    const darkBtn = document.getElementById('darkBtn');
+    const lightBtn = document.getElementById('lightMode');
+    const darkBtn = document.getElementById('darkMode');
     const body = document.body;
 
     // Default to light mode
@@ -43,6 +43,7 @@ window.onload = () => {
     document.querySelector('.header').classList.add('header-light');
     document.querySelector('.footer').classList.add('footer-light');
     document.querySelector('.box').classList.add('box-light');
+    document.querySelector('.screen').classList.add('screen-light');
 
     lightBtn.style.display = 'none';
     darkBtn.style.display = 'inline-block';
