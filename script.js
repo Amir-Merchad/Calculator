@@ -5,16 +5,19 @@ function setTheme(mode) {
     const body = document.querySelector('.body');
     const lightButton = document.querySelector('.lightMode');
     const darkButton = document.querySelector('.darkMode');
+    const screen = document.querySelector('.screen');
 
     header.classList.remove('header-light', 'header-dark');
     box.classList.remove('box-light', 'box-dark');
     footer.classList.remove('footer-light', 'footer-dark');
     body.classList.remove('body-light', 'body-dark');
+    screen.classList.remove('screen-light', 'screen-dark');
 
     header.classList.add(`header-${mode}`);
     box.classList.add(`box-${mode}`);
     footer.classList.add(`footer-${mode}`);
     body.classList.add(`body-${mode}`);
+    screen.classList.add(`screen-${mode}`);
 
     if (mode === 'light') {
         lightButton.style.background = "rgba(255, 255, 255, 0.5)";
@@ -29,3 +32,18 @@ function setTheme(mode) {
 document.addEventListener('DOMContentLoaded', () => {
     setTheme('light'); // or 'dark'
 });
+
+window.onload = () => {
+    const lightBtn = document.getElementById('lightBtn');
+    const darkBtn = document.getElementById('darkBtn');
+    const body = document.body;
+
+    // Default to light mode
+    body.classList.add('body-light');
+    document.querySelector('.header').classList.add('header-light');
+    document.querySelector('.footer').classList.add('footer-light');
+    document.querySelector('.box').classList.add('box-light');
+
+    lightBtn.style.display = 'none';
+    darkBtn.style.display = 'inline-block';
+};
