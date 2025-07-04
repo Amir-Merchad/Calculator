@@ -138,14 +138,35 @@ html, body{
 .screen{
     display: flex;
     max-width: 500px;
-    /height: 130px;
     border-radius: 12px;
     margin-bottom: 10px;
-    justify-content: flex-end;
-    align-content: flex-end;
-    font-size: 36px;
-    padding-top: 90px;
-    padding-bottom: 20px;
+    flex-direction: column;
+    height: 120px;
+    justify-content: flex-start;
+}
+
+.calculation{
+    text-align: end;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.screenText{
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    gap: 10px;
+    font-size: 3rem;
+    font-weight: bold;
 }
 
 .buttons{
