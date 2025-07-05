@@ -5,88 +5,106 @@ let total = 1.2;
 const screenText = document.querySelector('.screenText');
 const calculation = document.querySelector('.calculation');
 
+function checkForEntry(){
+    if (((screenText.textContent !== "") && (calculation.textContent !== "") && !(screenText.textContent.includes("+") || (screenText.textContent.includes("-") && parseFloat(screenText.textContent) > 0) || screenText.textContent.includes("*") || screenText.textContent.includes("/")))) {
+        screenText.textContent = ""
+    }
+}
+
 function one(){
+    checkForEntry();
     screenText.textContent = screenText.textContent + "1";
 }
 
 function two(){
+    checkForEntry();
     screenText.textContent = screenText.textContent + "2";
 }
 
 function three(){
+    checkForEntry();
     screenText.textContent = screenText.textContent + "3";
 }
 
 function four() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "4";
 }
 
 function five() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "5";
 }
 
 function six() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "6";
 }
 
 function seven() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "7";
 }
 
 function eight() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "8";
 }
 
 function nine() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "9";
 }
 
 function zero() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + "0";
 }
 
 function comma() {
+    checkForEntry();
     screenText.textContent = screenText.textContent + ".";
 }
 
-function plus(){
-    if (screenText.textContent.includes("+") || screenText.textContent.includes("-") || screenText.textContent.includes("*") || screenText.textContent.includes("/")) {
+function checkForOperator(){
+    if (screenText.textContent.includes("+") || (screenText.textContent.includes("-") && parseFloat(screenText.textContent) > 0) || screenText.textContent.includes("*") || screenText.textContent.includes("/")) {
         calculate()
-    } else {
-        a = screenText.textContent;
-        screenText.textContent = screenText.textContent + "+"
-        currentOperator = "+"
+        calculation.textContent = a + currentOperator + b
+        currentOperator = ""
     }
+}
+
+function plus(){
+    checkForOperator();
+    a = screenText.textContent;
+    screenText.textContent = screenText.textContent + "+"
+    currentOperator = "+"
 }
 
 function minus(){
-    if (screenText.textContent.includes("+") || screenText.textContent.includes("-") || screenText.textContent.includes("*") || screenText.textContent.includes("/")) {
-        calculate()
-    } else {
-        a = screenText.textContent;
-        screenText.textContent = screenText.textContent + "-"
-        currentOperator = "-"
-    }
+    checkForOperator();
+    a = screenText.textContent;
+    screenText.textContent = screenText.textContent + "-"
+    currentOperator = "-"
 }
 
 function multiply(){
-    if (screenText.textContent.includes("+") || screenText.textContent.includes("-") || screenText.textContent.includes("*") || screenText.textContent.includes("/")) {
-        calculate()
-    } else {
-        a = screenText.textContent;
-        screenText.textContent = screenText.textContent + "*"
-        currentOperator = "*"
-    }
+    checkForOperator();
+    a = screenText.textContent;
+    screenText.textContent = screenText.textContent + "*"
+    currentOperator = "*"
+}
+
+function equal(){
+    calculation.textContent = screenText.textContent
+    calculate()
 }
 
 function divide(){
-    if (screenText.textContent.includes("+") || screenText.textContent.includes("-") || screenText.textContent.includes("*") || screenText.textContent.includes("/")) {
-        calculate()
-    } else {
-        a = screenText.textContent;
-        screenText.textContent = screenText.textContent + "/"
-        currentOperator = "/"
-    }
+    checkForOperator();
+    a = screenText.textContent;
+    screenText.textContent = screenText.textContent + "/"
+    currentOperator = "/"
 }
 
 function Backspace() {
@@ -111,25 +129,21 @@ function calculate(){
         a = parseFloat(a)
         b = parseFloat(b)
         total = a + b;
-        calculation.textContent = screenText.textContent;
     } else if (currentOperator === "-") {
         b = screenText.textContent.slice(screenText.textContent.indexOf("-") + 1);
         a = parseFloat(a)
         b = parseFloat(b)
         total = a - b;
-        calculation.textContent = screenText.textContent;
     } else if (currentOperator === "*") {
         b = screenText.textContent.slice(screenText.textContent.indexOf("*") + 1);
         a = parseFloat(a)
         b = parseFloat(b)
         total = a * b;
-        calculation.textContent = screenText.textContent;
     } else if (currentOperator === "/") {
         b = screenText.textContent.slice(screenText.textContent.indexOf("/") + 1);
         a = parseFloat(a)
         b = parseFloat(b)
         total = a / b;
-        calculation.textContent = screenText.textContent;
     }
     total = cleanNumber(total);
     screenText.textContent = total;
