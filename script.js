@@ -52,7 +52,7 @@ function handleOperator(op) {
         }
     }
 
-    if (["+", "*", "/"].some(o => content.includes(o)) && currentOperator) {
+    if (["+", "*", "/"].some(o => content.includes(o)) && currentOperator && op !== "-") {
         showError("Only one operator allowed");
         return;
     }
@@ -68,7 +68,7 @@ function handleOperator(op) {
 }
 
 function equal() {
-    const content = screenText.textContent.trim();
+    const content = screenText.textContent;
 
     if (content === "") {
         showError("Nothing to calculate");
@@ -76,7 +76,9 @@ function equal() {
     }
 
     if (!["+", "*", "/"].some(op => content.includes(op)) &&
-        (content.indexOf("-") <= 0 || content.lastIndexOf("-") === 0)) {
+        (content.indexOf("-") === -1 ||
+            (content.indexOf("-") === 0 && content.lastIndexOf("-") === 0)))
+    {
         const result = cleanNumber(parseFloat(content));
         screenText.textContent = result;
         calculation.textContent = content + "=" + result;
@@ -88,7 +90,10 @@ function equal() {
     const operators = ["+", "-", "*", "/"];
     let operatorIndex = -1;
 
-    for (let i = 1; i < content.length; i++) {
+    let startIndex = 0;
+    if (content[0] === '-') startIndex = 1;
+
+    for (let i = startIndex; i < content.length; i++) {
         if (operators.includes(content[i])) {
             operatorIndex = i;
             break;
@@ -104,6 +109,8 @@ function equal() {
 
     currentOperator = content[operatorIndex];
     a = parseFloat(content.slice(0, operatorIndex));
+
+    // Fixed: Simply take the rest of the string for b
     b = parseFloat(content.slice(operatorIndex + 1));
 
     if (isNaN(a) || isNaN(b)) {
@@ -269,32 +276,33 @@ document.addEventListener("keydown", (e) => {
 
     if (key === "." || key === ",") {
         comma();
-        animateKeyButton("comma");
+        animateKeyButton(key);
     }
 
     if (["+", "-", "*", "/"].includes(key)) {
         handleOperator(key);
-        const map = { "+": "add", "-": "subs", "*": "mult", "/": "div" };
-        animateKeyButton(map[key]);
+        animateKeyButton(key);
     }
 
     if (key === "Enter" || key === "=") {
         equal();
-        animateKeyButton("equal");
+        animateKeyButton(key);
     }
 
     if (key === "Backspace") {
         Backspace();
-        animateKeyButton("delete");
+        animateKeyButton(key);
     }
 
     if (key === "Escape") {
         reset();
-        animateKeyButton("reset");
+        animateKeyButton(key);
     }
 });
 
 function animateKeyButton(key) {
+    const normalizedKey = key.toLowerCase(); // Fix: Normalize all keys
+
     const keyClassMap = {
         "0": "zero",
         "1": "num-1",
@@ -311,14 +319,14 @@ function animateKeyButton(key) {
         "*": "mult",
         "/": "div",
         "=": "equal",
-        "Enter": "equal",
-        "Backspace": "delete",
-        "Escape": "reset",
+        "enter": "equal",
+        "backspace": "delete",
+        "escape": "reset",
         ".": "comma",
         ",": "comma"
     };
 
-    const className = keyClassMap[key];
+    const className = keyClassMap[normalizedKey];
     if (!className) return;
 
     const btn = document.querySelector(`.calc-button.${className}`);
