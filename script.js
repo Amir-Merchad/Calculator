@@ -96,8 +96,13 @@ function multiply(){
 }
 
 function equal(){
-    calculation.textContent = screenText.textContent
-    calculate()
+    if (calculation.textContent !== "" || screenText.textContent !== "") {
+        if(calculation.textContent !== "" && screenText === ""){
+            return;
+        }
+        calculation.textContent = screenText.textContent
+        calculate()
+    }
 }
 
 function divide(){
@@ -143,12 +148,38 @@ function calculate(){
         b = screenText.textContent.slice(screenText.textContent.indexOf("/") + 1);
         a = parseFloat(a)
         b = parseFloat(b)
-        total = a / b;
+        if (b === 0 || b === "") {
+            showError("Cannot divide by zero");
+            calculation.textContent = ""
+            screenText.textContent = ""
+            total = "div0"
+        } else {
+            total = a / b;
+        }
     }
-    total = cleanNumber(total);
-    screenText.textContent = total;
+    if (total === "div0") {
+        screenText.textContent = "";
+    } else {
+        total = cleanNumber(total);
+        screenText.textContent = total;
+    }
 }
 
+function showError(message) {
+    const popup = document.getElementById('errorPopup');
+    const msg = document.getElementById('errorMessage');
+    msg.textContent = message;
+    popup.classList.add('show');
+
+    setTimeout(() => {
+        closeError();
+    }, 5000);
+}
+
+function closeError() {
+    const popup = document.getElementById('errorPopup');
+    popup.classList.remove('show');
+}
 
 function setTheme(mode) {
     const header = document.querySelector('.header');

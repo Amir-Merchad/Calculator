@@ -286,10 +286,6 @@
     color: rgba(66,66,66,100);
 }
 
-.error-popup{
-    display: none;
-}
-
 .footer {
     position: fixed;
     bottom: 0;
@@ -358,4 +354,41 @@
 
 .header, .box, .footer, .screen {
     transition: background 1.5s ease, color 1.5s ease;
+}
+
+.error-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336;
+    color: white;
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    z-index: 9999;
+    display: none;
+    min-width: 200px;
+    max-width: 300px;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.error-popup.show {
+    display: block;
+}
+
+.error-popup .close-btn {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    font-size: 20px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
