@@ -1,9 +1,8 @@
-html{
+* {
+    max-width: 100%;
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    font-family: 'Roboto', sans-serif;
-    height: 100%;
 }
 
 .content-wrapper{
@@ -30,10 +29,9 @@ html{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 0;
-    padding: 0;
     min-height: 100vh;
     overflow: auto;
+    padding-bottom: 60px;
 }
 
 .header-light{
@@ -108,8 +106,7 @@ html{
     flex-direction: column;
     justify-content: center;
     align-content: center;
-
-    padding: 20px 0; /* Added vertical padding */
+    padding: 20px 0;
     width: 100%;
     flex: 1;
     overflow: auto;
@@ -295,15 +292,16 @@ html{
 }
 
 .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
     padding: 10px 0;
     flex-shrink: 0;
-    position: sticky;
-    bottom: 0;
-
     font-weight: bold;
     font-size: 18px;
     display: flex;
-    width: 100%;
     height: 50px;
     justify-content: center;
     align-items: center;
