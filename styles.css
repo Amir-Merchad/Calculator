@@ -227,9 +227,12 @@
     color: #5CA6E3;
 }
 
-.calc-button:hover{
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+@media (hover: hover) {
+    .calc-button:hover{
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        background-color: rgba(255, 255, 255, 0.3);
+    }
 }
 
 .zero{
@@ -243,10 +246,6 @@
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
-}
-
-.calc-button:hover {
-    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .calc-button:active {

@@ -185,6 +185,19 @@ document.addEventListener('DOMContentLoaded', () => {
     setTheme('light');
 });
 
+document.querySelectorAll('.calc-button').forEach(btn => {
+    const animate = () => {
+        btn.blur();
+        btn.classList.remove('animate');
+        void btn.offsetWidth;
+        btn.classList.add('animate');
+        setTimeout(() => btn.classList.remove('animate'), 100);
+    };
+
+    btn.addEventListener('mousedown', animate);
+    btn.addEventListener('touchstart', animate);
+});
+
 window.onload = () => {
     const body = document.body;
     body.classList.add('body-light');
