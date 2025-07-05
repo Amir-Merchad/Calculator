@@ -307,11 +307,9 @@
 }
 
 @media (max-width: 600px) {
-
     .footer{
         height: 40px;
     }
-
     .box {
         margin: 10px;
         height: auto;
@@ -356,4 +354,8 @@
     .row {
         gap: 5px;
     }
+}
+
+.header, .box, .footer, .screen {
+    transition: background 1.5s ease, color 1.5s ease;
 }
