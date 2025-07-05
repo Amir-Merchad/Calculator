@@ -1,119 +1,149 @@
-let a = 1.2;
-let b = 1.2;
+let a = 0;
+let b = 0;
 let currentOperator = "";
-let total = 1.2;
+let total = 0;
 const screenText = document.querySelector('.screenText');
 const calculation = document.querySelector('.calculation');
 
 function checkForEntry(){
-    if (((screenText.textContent !== "") && (calculation.textContent !== "") && !(screenText.textContent.includes("+") || (screenText.textContent.includes("-") && parseFloat(screenText.textContent) > 0) || screenText.textContent.includes("*") || screenText.textContent.includes("/")))) {
-        screenText.textContent = ""
+    if (screenText.textContent !== "" &&
+        calculation.textContent !== "" &&
+        !["+", "-", "*", "/"].some(op => screenText.textContent.includes(op))) {
+        screenText.textContent = "";
+        calculation.textContent = "";
+        currentOperator = "";
     }
 }
 
-function one(){
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "1";
+function checkFora(){
+    const content = screenText.textContent;
+    let operatorIndex = -1;
+    const operators = ["+", "-", "*", "/"];
+
+    for (let i = 1; i < content.length; i++) {
+        if (operators.includes(content[i])) {
+            operatorIndex = i;
+            break;
+        }
+    }
+
+    if (operatorIndex <= 0) {
+        showError("Invalid format");
+        return false;
+    }
+
+    if (operatorIndex === content.length - 1) {
+        showError("Incomplete expression");
+        return false;
+    }
+
+    return true;
 }
 
-function two(){
+function appendToScreen(value){
     checkForEntry();
-    screenText.textContent = screenText.textContent + "2";
+    screenText.textContent += value;
 }
 
-function three(){
+function comma(){
     checkForEntry();
-    screenText.textContent = screenText.textContent + "3";
-}
 
-function four() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "4";
-}
+    const lastOpIndex = Math.max(
+        screenText.textContent.lastIndexOf("+"),
+        screenText.textContent.lastIndexOf("-"),
+        screenText.textContent.lastIndexOf("*"),
+        screenText.textContent.lastIndexOf("/")
+    );
 
-function five() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "5";
-}
+    const currentNumber = screenText.textContent.slice(lastOpIndex + 1);
 
-function six() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "6";
-}
-
-function seven() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "7";
-}
-
-function eight() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "8";
-}
-
-function nine() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "9";
-}
-
-function zero() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + "0";
-}
-
-function comma() {
-    checkForEntry();
-    screenText.textContent = screenText.textContent + ".";
-}
-
-function checkForOperator(){
-    if (screenText.textContent.includes("+") || (screenText.textContent.includes("-") && parseFloat(screenText.textContent) > 0) || screenText.textContent.includes("*") || screenText.textContent.includes("/")) {
-        calculate()
-        calculation.textContent = a + currentOperator + b
-        currentOperator = ""
+    if (!currentNumber.includes(".")) {
+        screenText.textContent += ".";
     }
 }
 
-function plus(){
-    checkForOperator();
-    a = screenText.textContent;
-    screenText.textContent = screenText.textContent + "+"
-    currentOperator = "+"
-}
+function handleOperator(op) {
+    const content = screenText.textContent;
 
-function minus(){
-    checkForOperator();
-    a = screenText.textContent;
-    screenText.textContent = screenText.textContent + "-"
-    currentOperator = "-"
-}
+    if (op === "-" && content === "") {
+        screenText.textContent = "-";
+        return;
+    }
 
-function multiply(){
-    checkForOperator();
-    a = screenText.textContent;
-    screenText.textContent = screenText.textContent + "*"
-    currentOperator = "*"
-}
-
-function equal(){
-    if (calculation.textContent !== "" || screenText.textContent !== "") {
-        if(calculation.textContent !== "" && screenText === ""){
+    if (currentOperator && content.endsWith(currentOperator)) {
+        if (op === "-" && !content.endsWith("--")) {
+            screenText.textContent += "-";
+            return;
+        } else {
+            showError("Invalid operator sequence");
             return;
         }
-        calculation.textContent = screenText.textContent
-        calculate()
     }
+
+    if (["+", "*", "/"].some(o => content.includes(o)) && currentOperator) {
+        showError("Only one operator allowed");
+        return;
+    }
+
+    if (content === "-" || content === "") {
+        showError("Enter a number first");
+        return;
+    }
+
+    a = parseFloat(content);
+    screenText.textContent += op;
+    currentOperator = op;
 }
 
-function divide(){
-    checkForOperator();
-    a = screenText.textContent;
-    screenText.textContent = screenText.textContent + "/"
-    currentOperator = "/"
+function equal() {
+    const content = screenText.textContent;
+
+    if (!["+", "*", "/"].some(op => content.includes(op)) &&
+        (content.indexOf("-") <= 0 || content.lastIndexOf("-") === 0)) {
+        const result = cleanNumber(parseFloat(content));
+        screenText.textContent = result;
+        calculation.textContent = "Result: " + result;
+        a = result;
+        currentOperator = "";
+        return;
+    }
+
+    let operatorIndex = -1;
+    const operators = ["+", "-", "*", "/"];
+
+    for (let i = 1; i < content.length; i++) {
+        if (operators.includes(content[i])) {
+            operatorIndex = i;
+            break;
+        }
+    }
+
+    if (operatorIndex <= 0 || operatorIndex === content.length - 1) {
+        if (operators.some(op => content.includes(op))) {
+            showError("Incomplete or invalid expression");
+        }
+        return;
+    }
+
+    currentOperator = content[operatorIndex];
+    a = parseFloat(content.slice(0, operatorIndex));
+    calculation.textContent = content;
+    calculate();
 }
 
 function Backspace() {
+    const lastChar = screenText.textContent.slice(-1);
     screenText.textContent = screenText.textContent.slice(0, -1);
+
+    if (["+", "-", "*", "/"].includes(lastChar)) {
+        currentOperator = "";
+    }
+
+    if (screenText.textContent === "") {
+        a = 0;
+        b = 0;
+        currentOperator = "";
+    }
 }
 
 function reset(){
@@ -121,48 +151,54 @@ function reset(){
     b = 0
     calculation.textContent = ""
     screenText.textContent = ""
+    currentOperator = ""
 }
 
 function cleanNumber(value) {
     const num = parseFloat(value);
-    return Number.isInteger(num) ? num : parseFloat(num.toFixed(2));
+    return Number.isInteger(num) ? num : +num.toFixed(4);
 }
 
 function calculate(){
     if (currentOperator === "+") {
-        b = screenText.textContent.slice(screenText.textContent.indexOf("+") + 1);
+        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
+        b = screenText.textContent.slice(opIndex + 1);
         a = parseFloat(a)
         b = parseFloat(b)
         total = a + b;
     } else if (currentOperator === "-") {
-        b = screenText.textContent.slice(screenText.textContent.indexOf("-") + 1);
+        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
+        b = screenText.textContent.slice(opIndex + 1);
         a = parseFloat(a)
         b = parseFloat(b)
         total = a - b;
     } else if (currentOperator === "*") {
-        b = screenText.textContent.slice(screenText.textContent.indexOf("*") + 1);
+        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
+        b = screenText.textContent.slice(opIndex + 1);
         a = parseFloat(a)
         b = parseFloat(b)
         total = a * b;
     } else if (currentOperator === "/") {
-        b = screenText.textContent.slice(screenText.textContent.indexOf("/") + 1);
-        a = parseFloat(a)
-        b = parseFloat(b)
+        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
+        b = screenText.textContent.slice(opIndex + 1);
+        a = parseFloat(a);
+        b = parseFloat(b);
         if (b === 0 || b === "") {
             showError("Cannot divide by zero");
-            calculation.textContent = ""
-            screenText.textContent = ""
-            total = "div0"
+            calculation.textContent = "";
+            screenText.textContent = "";
+            total = "div0";
+            currentOperator = "";
+            return;
         } else {
             total = a / b;
         }
     }
-    if (total === "div0") {
-        screenText.textContent = "";
-    } else {
-        total = cleanNumber(total);
-        screenText.textContent = total;
-    }
+    total = cleanNumber(total);
+    screenText.textContent = total;
+    calculation.textContent = a + currentOperator + b + "=" + total;
+    a = total;
+    currentOperator = "";
 }
 
 function showError(message) {
@@ -237,3 +273,32 @@ window.onload = () => {
     document.querySelector('.box').classList.add('box-light');
     document.querySelector('.screen').classList.add('screen-light');
 };
+
+document.addEventListener("keydown", (e) => {
+    const key = e.key;
+    e.preventDefault();
+
+    if (!isNaN(key)) {
+        appendToScreen(key);
+    }
+
+    if (key === "." || key === ",") {
+        comma();
+    }
+
+    if (["+", "-", "*", "/"].includes(key)) {
+        handleOperator(key);
+    }
+
+    if (key === "Enter" || key === "=") {
+        equal();
+    }
+
+    if (key === "Backspace") {
+        Backspace();
+    }
+
+    if (key === "Escape") {
+        reset();
+    }
+});
