@@ -15,31 +15,6 @@ function checkForEntry(){
     }
 }
 
-function checkFora(){
-    const content = screenText.textContent;
-    let operatorIndex = -1;
-    const operators = ["+", "-", "*", "/"];
-
-    for (let i = 1; i < content.length; i++) {
-        if (operators.includes(content[i])) {
-            operatorIndex = i;
-            break;
-        }
-    }
-
-    if (operatorIndex <= 0) {
-        showError("Invalid format");
-        return false;
-    }
-
-    if (operatorIndex === content.length - 1) {
-        showError("Incomplete expression");
-        return false;
-    }
-
-    return true;
-}
-
 function appendToScreen(value){
     checkForEntry();
     screenText.textContent += value;
@@ -47,16 +22,13 @@ function appendToScreen(value){
 
 function comma(){
     checkForEntry();
-
     const lastOpIndex = Math.max(
         screenText.textContent.lastIndexOf("+"),
         screenText.textContent.lastIndexOf("-"),
         screenText.textContent.lastIndexOf("*"),
         screenText.textContent.lastIndexOf("/")
     );
-
     const currentNumber = screenText.textContent.slice(lastOpIndex + 1);
-
     if (!currentNumber.includes(".")) {
         screenText.textContent += ".";
     }
@@ -102,14 +74,14 @@ function equal() {
         (content.indexOf("-") <= 0 || content.lastIndexOf("-") === 0)) {
         const result = cleanNumber(parseFloat(content));
         screenText.textContent = result;
-        calculation.textContent = "Result: " + result;
+        calculation.textContent = content + "=" + result;
         a = result;
         currentOperator = "";
         return;
     }
 
-    let operatorIndex = -1;
     const operators = ["+", "-", "*", "/"];
+    let operatorIndex = -1;
 
     for (let i = 1; i < content.length; i++) {
         if (operators.includes(content[i])) {
@@ -127,7 +99,14 @@ function equal() {
 
     currentOperator = content[operatorIndex];
     a = parseFloat(content.slice(0, operatorIndex));
-    calculation.textContent = content;
+    b = parseFloat(content.slice(operatorIndex + 1));
+
+    if (isNaN(a) || isNaN(b)) {
+        showError("Invalid calculation");
+        return;
+    }
+
+    calculation.textContent = a + currentOperator + b + "=";
     calculate();
 }
 
@@ -147,11 +126,11 @@ function Backspace() {
 }
 
 function reset(){
-    a = 0
-    b = 0
-    calculation.textContent = ""
-    screenText.textContent = ""
-    currentOperator = ""
+    a = 0;
+    b = 0;
+    calculation.textContent = "";
+    screenText.textContent = "";
+    currentOperator = "";
 }
 
 function cleanNumber(value) {
@@ -160,43 +139,37 @@ function cleanNumber(value) {
 }
 
 function calculate(){
-    if (currentOperator === "+") {
-        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
-        b = screenText.textContent.slice(opIndex + 1);
-        a = parseFloat(a)
-        b = parseFloat(b)
-        total = a + b;
-    } else if (currentOperator === "-") {
-        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
-        b = screenText.textContent.slice(opIndex + 1);
-        a = parseFloat(a)
-        b = parseFloat(b)
-        total = a - b;
-    } else if (currentOperator === "*") {
-        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
-        b = screenText.textContent.slice(opIndex + 1);
-        a = parseFloat(a)
-        b = parseFloat(b)
-        total = a * b;
-    } else if (currentOperator === "/") {
-        const opIndex = screenText.textContent.lastIndexOf(currentOperator);
-        b = screenText.textContent.slice(opIndex + 1);
-        a = parseFloat(a);
-        b = parseFloat(b);
-        if (b === 0 || b === "") {
-            showError("Cannot divide by zero");
-            calculation.textContent = "";
-            screenText.textContent = "";
-            total = "div0";
-            currentOperator = "";
-            return;
-        } else {
-            total = a / b;
-        }
+    if (screenText.textContent.endsWith(currentOperator)) {
+        showError("Incomplete expression");
+        return;
     }
+
+    switch (currentOperator) {
+        case "+":
+            total = a + b;
+            break;
+        case "-":
+            total = a - b;
+            break;
+        case "*":
+            total = a * b;
+            break;
+        case "/":
+            if (b === 0) {
+                showError("Cannot divide by zero");
+                reset();
+                return;
+            }
+            total = a / b;
+            break;
+        default:
+            showError("Unknown operator");
+            return;
+    }
+
     total = cleanNumber(total);
     screenText.textContent = total;
-    calculation.textContent = a + currentOperator + b + "=" + total;
+    calculation.textContent += total;
     a = total;
     currentOperator = "";
 }
@@ -244,7 +217,7 @@ function setTheme(mode) {
     }
     if (mode === 'dark') {
         lightButton.style.background = "rgba(255, 255, 255, 0.1)";
-        darkButton.style.background = "rgba(255, 255, 255, 0.5)"
+        darkButton.style.background = "rgba(255, 255, 255, 0.5)";
     }
 }
 
@@ -276,29 +249,18 @@ window.onload = () => {
 
 document.addEventListener("keydown", (e) => {
     const key = e.key;
-    e.preventDefault();
 
-    if (!isNaN(key)) {
-        appendToScreen(key);
+    if (
+        !isNaN(key) || key === "." || key === "," ||
+        ["+", "-", "*", "/", "Enter", "=", "Backspace", "Escape"].includes(key)
+    ) {
+        e.preventDefault();
     }
 
-    if (key === "." || key === ",") {
-        comma();
-    }
-
-    if (["+", "-", "*", "/"].includes(key)) {
-        handleOperator(key);
-    }
-
-    if (key === "Enter" || key === "=") {
-        equal();
-    }
-
-    if (key === "Backspace") {
-        Backspace();
-    }
-
-    if (key === "Escape") {
-        reset();
-    }
+    if (!isNaN(key)) appendToScreen(key);
+    if (key === "." || key === ",") comma();
+    if (["+", "-", "*", "/"].includes(key)) handleOperator(key);
+    if (key === "Enter" || key === "=") equal();
+    if (key === "Backspace") Backspace();
+    if (key === "Escape") reset();
 });
