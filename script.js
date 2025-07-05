@@ -68,7 +68,12 @@ function handleOperator(op) {
 }
 
 function equal() {
-    const content = screenText.textContent;
+    const content = screenText.textContent.trim();
+
+    if (content === "") {
+        showError("Nothing to calculate");
+        return;
+    }
 
     if (!["+", "*", "/"].some(op => content.includes(op)) &&
         (content.indexOf("-") <= 0 || content.lastIndexOf("-") === 0)) {
@@ -257,10 +262,70 @@ document.addEventListener("keydown", (e) => {
         e.preventDefault();
     }
 
-    if (!isNaN(key)) appendToScreen(key);
-    if (key === "." || key === ",") comma();
-    if (["+", "-", "*", "/"].includes(key)) handleOperator(key);
-    if (key === "Enter" || key === "=") equal();
-    if (key === "Backspace") Backspace();
-    if (key === "Escape") reset();
+    if (!isNaN(key)) {
+        appendToScreen(key);
+        animateKeyButton(key);
+    }
+
+    if (key === "." || key === ",") {
+        comma();
+        animateKeyButton("comma");
+    }
+
+    if (["+", "-", "*", "/"].includes(key)) {
+        handleOperator(key);
+        const map = { "+": "add", "-": "subs", "*": "mult", "/": "div" };
+        animateKeyButton(map[key]);
+    }
+
+    if (key === "Enter" || key === "=") {
+        equal();
+        animateKeyButton("equal");
+    }
+
+    if (key === "Backspace") {
+        Backspace();
+        animateKeyButton("delete");
+    }
+
+    if (key === "Escape") {
+        reset();
+        animateKeyButton("reset");
+    }
 });
+
+function animateKeyButton(key) {
+    const keyClassMap = {
+        "0": "zero",
+        "1": "num-1",
+        "2": "num-2",
+        "3": "num-3",
+        "4": "num-4",
+        "5": "num-5",
+        "6": "num-6",
+        "7": "num-7",
+        "8": "num-8",
+        "9": "num-9",
+        "+": "add",
+        "-": "subs",
+        "*": "mult",
+        "/": "div",
+        "=": "equal",
+        "Enter": "equal",
+        "Backspace": "delete",
+        "Escape": "reset",
+        ".": "comma",
+        ",": "comma"
+    };
+
+    const className = keyClassMap[key];
+    if (!className) return;
+
+    const btn = document.querySelector(`.calc-button.${className}`);
+    if (btn) {
+        btn.classList.remove("animate");
+        void btn.offsetWidth;
+        btn.classList.add("animate");
+        setTimeout(() => btn.classList.remove("animate"), 100);
+    }
+}

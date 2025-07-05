@@ -252,6 +252,10 @@
     animation: bubble-pop 0.3s ease;
 }
 
+.calc-button.animate {
+    animation: bubble-pop 0.3s ease;
+}
+
 .box-light{
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
@@ -392,3 +396,4 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
