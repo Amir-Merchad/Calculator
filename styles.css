@@ -1,4 +1,4 @@
-html, body{
+html{
     margin: 0;
     padding: 0;
     overflow-x: hidden;
@@ -6,12 +6,12 @@ html, body{
     height: 100%;
 }
 
-.content{
-    width: 100%;
+.content-wrapper{
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    position: relative;
+    overflow: auto;
+    padding: 0;
 }
 
 .body-light{
@@ -25,10 +25,15 @@ html, body{
 }
 
 .body{
-    flex: 1 0 auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: #222831;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow: auto;
 }
 
 .header-light{
@@ -285,7 +290,16 @@ html, body{
     color: rgba(66,66,66,100);
 }
 
+.error-popup{
+    display: none;
+}
+
 .footer {
+    padding: 10px 0;
+    flex-shrink: 0;
+    position: sticky;
+    bottom: 0;
+
     font-weight: bold;
     font-size: 18px;
     display: flex;
@@ -293,13 +307,6 @@ html, body{
     height: 50px;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
-
-    position: absolute; /* Changed from static */
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
 }
 
 @media (max-width: 600px) {
@@ -316,7 +323,7 @@ html, body{
 
     .header{
         height: 40px;
-        font-size: 14px;
+        font-size: 24px;
     }
 
     .image-text {
