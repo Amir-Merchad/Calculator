@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-.content-wrapper{
+.content-wrapper {
     flex: 1 0 auto;
     display: flex;
     flex-direction: column;
@@ -13,17 +13,17 @@
     padding: 0;
 }
 
-.body-light{
+.body-light {
     background: linear-gradient(to bottom right, #FFFFFF, #0e88de);
-    color: black;
+    color: #000000;
 }
 
-.body-dark{
+.body-dark {
     background: linear-gradient(to bottom right, #474747, #0a4c8a);
     color: white;
 }
 
-.body{
+.body {
     font-family: 'Roboto', sans-serif;
     background-color: #222831;
     display: flex;
@@ -34,25 +34,25 @@
     padding-bottom: 60px;
 }
 
-.header-light{
+.header-light {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    color: rgba(66,66,66,100);
+    color: rgba(66, 66, 66, 100);
 }
 
-.header-dark{
+.header-dark {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    color: rgba(255,255,255,100);
+    color: rgba(255, 255, 255, 100);
 }
 
-.header{
+.header {
     font-weight: bold;
     font-size: 36px;
     display: flex;
@@ -90,17 +90,17 @@
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     color: #fff;
     backdrop-filter: blur(5px);
     transition: background 0.3s;
 }
 
 .theme-buttons button:hover {
-    background-color: rgba(255,255,255,0.4);
+    background-color: rgba(255, 255, 255, 0.4);
 }
 
-.boxContainer{
+.boxContainer {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -112,7 +112,7 @@
     overflow: auto;
 }
 
-.box{
+.box {
     justify-content: center;
     display: flex;
     max-width: 500px;
@@ -127,17 +127,17 @@
     padding: 15px;
 }
 
-.screen-light{
-    background: rgba(255,255,255,0);
-    color: rgba(66,66,66,100);
+.screen-light {
+    background: rgba(255, 255, 255, 0);
+    color: rgba(66, 66, 66, 100);
 }
 
-.screen-dark{
-    background: rgba(255,255,255,0);
-    color: rgba(255,255,255,100);
+.screen-dark {
+    background: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 100);
 }
 
-.screen{
+.screen {
     display: flex;
     max-width: 500px;
     border-radius: 12px;
@@ -147,7 +147,7 @@
     justify-content: flex-start;
 }
 
-.calculation{
+.calculation {
     text-align: end;
     height: 40px;
     display: flex;
@@ -159,7 +159,7 @@
     font-size: 1.5rem;
 }
 
-.screenText{
+.screenText {
     height: 80px;
     display: flex;
     flex-direction: column;
@@ -171,7 +171,7 @@
     font-weight: bold;
 }
 
-.buttons{
+.buttons {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -191,7 +191,7 @@
 }
 
 .right-buttons {
-    color : rgba(92,166,227,0);
+    color: rgba(92, 166, 227, 0);
     max-width: 100px;
     display: flex;
     flex-direction: column;
@@ -205,7 +205,7 @@
     width: 100%;
 }
 
-.calc-button{
+.calc-button {
     color: white;
     border: none;
     border-radius: 20px;
@@ -223,29 +223,36 @@
     touch-action: manipulation;
 }
 
-.calc-button.equal,.calc-button.add,.calc-button.subs,.calc-button.mult,.calc-button.div{
+.calc-button.equal, .calc-button.add, .calc-button.subs, .calc-button.mult, .calc-button.div {
     color: #5CA6E3;
 }
 
 @media (hover: hover) {
-    .calc-button:hover{
+    .calc-button:hover {
         transform: scale(1.1);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         background-color: rgba(255, 255, 255, 0.3);
     }
 }
 
-.zero{
+.zero {
     flex: 2;
 }
-.equal{
+
+.equal {
     flex: 3;
 }
 
 @keyframes bubble-pop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .calc-button:active {
@@ -256,7 +263,7 @@
     animation: bubble-pop 0.3s ease;
 }
 
-.box-light{
+.box-light {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -264,7 +271,7 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-.box-dark{
+.box-dark {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -272,22 +279,22 @@
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-.footer-dark{
+.footer-dark {
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    color: rgba(255,255,255,100);
+    color: rgba(255, 255, 255, 100);
 }
 
-.footer-light{
+.footer-light {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    color: rgba(66,66,66,100);
+    color: rgba(66, 66, 66, 100);
 }
 
 .footer {
@@ -307,16 +314,17 @@
 }
 
 @media (max-width: 600px) {
-    .footer{
+    .footer {
         height: 40px;
     }
+
     .box {
         margin: 10px;
         height: auto;
         border-radius: 15px;
     }
 
-    .header{
+    .header {
         height: 40px;
         font-size: 24px;
     }
@@ -337,10 +345,11 @@
         font-size: 14px;
     }
 
-    .calc-button{
+    .calc-button {
         font-size: 24px;
         height: 50px;
     }
+
     .calc-button {
         height: 50px;
         font-size: 1rem;
@@ -393,7 +402,13 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 

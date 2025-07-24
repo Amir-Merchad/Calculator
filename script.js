@@ -5,7 +5,7 @@ let total = 0;
 const screenText = document.querySelector('.screenText');
 const calculation = document.querySelector('.calculation');
 
-function checkForEntry(){
+function checkForEntry() {
     if (screenText.textContent !== "" &&
         calculation.textContent !== "" &&
         !["+", "-", "*", "/"].some(op => screenText.textContent.includes(op))) {
@@ -15,12 +15,12 @@ function checkForEntry(){
     }
 }
 
-function appendToScreen(value){
+function appendToScreen(value) {
     checkForEntry();
     screenText.textContent += value;
 }
 
-function comma(){
+function comma() {
     checkForEntry();
     const lastOpIndex = Math.max(
         screenText.textContent.lastIndexOf("+"),
@@ -77,8 +77,7 @@ function equal() {
 
     if (!["+", "*", "/"].some(op => content.includes(op)) &&
         (content.indexOf("-") === -1 ||
-            (content.indexOf("-") === 0 && content.lastIndexOf("-") === 0)))
-    {
+            (content.indexOf("-") === 0 && content.lastIndexOf("-") === 0))) {
         const result = cleanNumber(parseFloat(content));
         screenText.textContent = result;
         calculation.textContent = content + "=" + result;
@@ -137,7 +136,7 @@ function Backspace() {
     }
 }
 
-function reset(){
+function reset() {
     a = 0;
     b = 0;
     calculation.textContent = "";
@@ -150,7 +149,7 @@ function cleanNumber(value) {
     return Number.isInteger(num) ? num : +num.toFixed(4);
 }
 
-function calculate(){
+function calculate() {
     if (screenText.textContent.endsWith(currentOperator)) {
         showError("Incomplete expression");
         return;
