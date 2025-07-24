@@ -40,8 +40,6 @@ Built as part of [The Odin Project](https://www.theodinproject.com/) curriculum.
 
 ~~~plaintext
 calculator-app/
-
-calculator-app/
 ├── index.html
 ├── style.css
 ├── script.js
